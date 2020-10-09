@@ -23,6 +23,10 @@
   width: 100%;
   height: calc(100% - 150px);
 }
+.modal .content > div {
+  width: 100%;
+  height: 100%;
+}
 .modal .content .media {
   width: 100%;
   height: 100%;
@@ -81,4 +85,9 @@
 .modal .actions .change .icon {
   color: #fff;
   font-size: 30px;
+}
+
+
+#myVideo {
+  background-color: #ACB2F2;
 }
