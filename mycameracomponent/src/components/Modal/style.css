@@ -1,0 +1,84 @@
+.modal {
+  position: fixed;
+  z-index: 1;
+  width: 100vw;
+  height: 100vh;
+  background-color: #fff;
+}
+
+.modal .header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 50px;
+  padding-right: 20px;
+  background-color: #000;
+}
+.modal .header .close {
+  color: #fff;
+  font-size: 30px;
+}
+
+.modal .content {
+  width: 100%;
+  height: calc(100% - 150px);
+}
+.modal .content .media {
+  width: 100%;
+  height: 100%;
+}
+
+
+.modal .actions {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 100px;
+  background-color: #000;
+}
+
+.modal .actions > div {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  background-color: #fff;
+}
+
+.modal .actions .media {
+}
+
+.modal .actions .clik {
+  position: relative;
+  width: 70px;
+  height: 70px;
+}
+.modal .actions .clik:before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  left: -6px;
+  top: -6px;
+  width: 80px;
+  height: 80px;
+  border-radius: 100%;
+  border: 1px solid #fff;
+  background-color: transparent;
+}
+
+.modal .actions .change {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #fff;
+  background-color: transparent;
+}
+.modal .actions .change .icon {
+  color: #fff;
+  font-size: 30px;
+}
