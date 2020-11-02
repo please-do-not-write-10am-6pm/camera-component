@@ -36,9 +36,9 @@ const theme = createMuiTheme({
             root: {
                 backgroundColor: 'transparent'
             },
-            modalRoot: {
-                backgroundColor: 'red'
-            }
+            // modalRoot: {
+            //     backgroundColor: 'red'
+            // }
         }
     }
 });
@@ -89,13 +89,16 @@ class QuarkCamera extends Component {
                       }}
                     
                 >
-                    <DialogTitle style={{ cursor: 'move' }} className="draggable-camera" style={{"padding":"0"}}>
+                    <DialogTitle style={{ cursor: 'move' }} className="draggable-camera" style={{"padding":"0"}} >
+                        <IconButton aria-label="close" style={{"float":"left","color":"white"}}>
+                            <h2>Take Photo</h2>
+                        </IconButton>
                         <IconButton aria-label="close"  onClick={this.handler} style={{"float":"right","color":"white"}}>
                             <CloseIcon />
                         </IconButton>
                     </DialogTitle>
                     <DialogContent className="draggable-camera">
-                    <VideoContent {...this.props} />
+                        <VideoContent {...this.props} />
                     </DialogContent>
                     <DialogActions>
                         <Button autoFocus onClick={this.handler} color="primary"> Close</Button>

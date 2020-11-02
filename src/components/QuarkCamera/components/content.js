@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import videojs from 'video.js';
 import 'webrtc-adapter';
 import RecordRTC from 'recordrtc';
-import Record from 'videojs-record/dist/videojs.record.js';
+// import Record from 'videojs-record/dist/videojs.record.js';
 
-import styles from './QuarkCamera.scss'
+// import styles from './QuarkCamera.scss'
 
 
 class VideoContent extends Component {
@@ -20,6 +20,7 @@ class VideoContent extends Component {
                 ' with videojs-record ' + videojs.getPluginVersion('record') +
                 ' and recordrtc ' + RecordRTC.version;
             videojs.log(version_info);
+            
 
             this.player.record().getDevice();
         });
@@ -51,16 +52,34 @@ class VideoContent extends Component {
         });
     }
 
-    componentWillReceiveProps(nextProps){
+    UNSAFE_componentWillReceiveProps (nextProps){
     }
 
     componentWillUnmount() {
         if (this.player) this.player.dispose();
     }
 
+    // Take the photo and present in canvas
+    takePhoto = () =>{
+        const { sendFile } = this.props;
+        const context = this.canvas.getContext('2d');
+        context.drawImage(this.videoNode, 0, 0, this.props.width, this.props.height );
+        console.log(this.props);
+        this.canvas.toBlob(()=>{return sendFile}, 'image/*');
+    };
+
     render() {
         return (
-          <video ref={node => this.videoNode = node} className="video-js vjs-default-skin" playsInline></video>
+          <div>
+            <video ref={node => this.videoNode = node} className="video-js vjs-default-skin" playsInline></video>
+            <div>
+              <button type="button" className="btn btn-primary" onClick={this.takePhoto}>Take Photo!</button>
+              <div>
+                <canvas width="320" height="240" ref={ref => (this.canvas = ref)} />
+              </div>
+            </div>
+          </div>
+             
         )
     }
 }
