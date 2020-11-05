@@ -25,7 +25,7 @@ class VideoContent extends Component {
 
             this.player.record().getDevice();
         });
-
+        //console.log(this.player.record().getDevice());
         // device is ready
         this.player.on('deviceReady', () => {
             console.log('device is ready!');
@@ -40,7 +40,10 @@ class VideoContent extends Component {
         this.player.on('finishRecord', () => {
             // recordedData is a blob object containing the recorded data that
             // can be downloaded by the user, stored on server etc.
-            console.log('finished recording: ', this.player.recordedData);
+
+            this.props.componentSetting.on('afterVideoRecord',()=>{
+                console.log('finished recording: ', this.player.recordedData);
+            })
         });
 
         // error handling
@@ -67,23 +70,37 @@ class VideoContent extends Component {
         context.drawImage(this.videoNode, 0, 0, 50, 50 );
         console.log(this.props);
         this.canvas.toBlob(()=>{return sendFile}, 'image/*');
-    };
 
+        this.props.componentSetting.on('afterSnap',()=>{
+            console.log('finish SnapPhoto');
+            //alert("snap");
+        })
+    };
+    popupSnapShot = () =>{
+        const context = this.canvas1.getContext('2d');
+        context.drawImage(this.canvas,0,0,100,100);
+    }
     render() {
         return (
           <div>
-            <video ref={node => this.videoNode = node} className="video-js vjs-default-skin" playsInline></video>
+            <video ref={node => this.videoNode = node} className="video-js vjs-default-skin"></video>
             <div className="CameraBottom">
 
-                <div className='toolbtn'>
-                    <canvas width="50" height="50" style={{borderRadius:'50%'}} ref={ref => (this.canvas = ref)} />
+                <div className='toolbtn' onClick={this.popupSnapShot}>
+                    <canvas width="50px" height="50px" style={{borderRadius:'50%'}} ref={ref => (this.canvas = ref)} />
                 </div>
-
                 <div className='toolbtn' style={{width:'60px',height:'60px',boxShadow:'0px 0px 0px 3px black, 0px 0px 3px 3px white'}} onClick={this.takePhoto}></div>
-                <div className='toolbtn'>
-                    
+                <div className='toolbtn' onClick={this.showCameraList}>
+                    <ul>
+                        <li>A</li>
+                        <li>B</li>
+                        <li>C</li>
+                        <li>D</li>
+                    </ul>
                 </div>
-              
+            </div>
+            <div>
+                <canvas width="100" height="100" ref={ref=>(this.canvas1=ref)}/>
             </div>
           </div>
         )

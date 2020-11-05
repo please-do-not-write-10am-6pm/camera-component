@@ -20,6 +20,42 @@ const videoJsOptions = {
         }
     }
   };
+  var setting = {
+        instance:"123",
+        title: "Cheese!",
+        watermark: "Drinna",
+        addWatermarkDate: true,
+        backgroundColor: "#000000",
+        enableAudio: true,
+        enableVideo: true,
+        imageOutputFormat: "image/png",
+        imageOutputQuality: 0.92,
+        maxVideoLength: 10,
+        readQrEnabled: false,
+        debug: true,
+        translations: {
+            close_button: "Close",
+            take_photo: "Take photo"
+        },
+      
+        on: function(message, callback){
+            if( typeof callback == "function"){
+                if(message == "beforeClose"){
+                    callback.call(this);
+                    alert("beforeClose");
+                }
+                if(message == "afterClose"){
+                    callback.call(this);
+                }
+                if(message == "afterSnap"){
+                    callback.call(this);
+                }
+                if(message == "afterVideoRecord"){
+                    callback.call(this);
+                }
+            }
+        }
+};
 class IndexComponent extends Component{
     state = {
         open: false
@@ -37,7 +73,7 @@ class IndexComponent extends Component{
         return(
             <>
                 <button onClick={this.handler}>OpenCamera</button>
-                {open && <NewQuarkCamera onClose={this.handler} {...videoJsOptions} />}
+                {open && <NewQuarkCamera onClose={this.handler} {...videoJsOptions} componentSetting={setting} />}
             </>
         )
     }

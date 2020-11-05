@@ -9,5 +9,16 @@
     height: 50px;
     border-radius: 50%;
     background-color: white;
-
+}
+.toolbtn:hover{
+    box-shadow: 0px 0px 3px 3px green;
+}
+.toolbtn ul {
+    display: none;
+    position: absolute;
+    right: 5px;
+}
+.toolbtn:hover > ul {
+    display:inherit;
+    background-color: wheat;
 }

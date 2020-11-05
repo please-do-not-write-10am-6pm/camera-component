@@ -19,23 +19,29 @@ class NewQuarkCamera extends Component {
        
     
         componentDidMount() {
+
         }
-    
+        
         // destroy player on unmount
         componentWillUnmount() {
             if (this.player) {
-                this.player.dispose();
-                
+                this.player.dispose();       
             }
+
+            this.props.componentSetting.on("beforeClose",()=>{
+                console.log('beforeClose');
+            })
         }
+        
         render(){
             
             return(
                 <>
                 <Draggable>
-                    <div className="Camera"> 
+                    <div className="Camera" style={{backgroundColor:`${this.props.componentSetting.backgroundColor}`}}> 
                         <div className="CameraTitle" style={{cursor:'move'}}>
-                            <span style={{color:'white'}} onClick={this.props.onClose}>X</span>
+                            <span style={{color:'white',padding:'15px',display:'flex',justifyContent:'center'}}>{this.props.componentSetting.title}</span>
+                            <span style={{color:'white',right:'10px',top:'10px',position:'absolute'}} onClick={this.props.onClose}>X</span>
                         </div>
                         <div className="CameraContent">
                             <VideoContent {...this.props} />
