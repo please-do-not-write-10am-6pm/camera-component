@@ -2,8 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import QuarkCamera from './components/QuarkCamera';
+import IndexComponent from './components/NewQuarkCamera';
 import * as serviceWorker from './serviceWorker';
-
+/*
 const videoJsOptions = {
   controls: false,
   width: 320,
@@ -23,10 +24,14 @@ const videoJsOptions = {
       }
   }
 };
-// <QuarkCamera { ...videoJsOptions }/>
+/*
 ReactDOM.render(
     <QuarkCamera { ...videoJsOptions }/>,
   document.getElementById('root')
+*/
+ReactDOM.render(
+  <IndexComponent/>,
+document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change

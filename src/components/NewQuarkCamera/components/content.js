@@ -6,6 +6,7 @@ import RecordRTC from 'recordrtc';
 // import Record from 'videojs-record/dist/videojs.record.js';
 
 // import styles from './QuarkCamera.scss'
+import "./contentStyle.scss";
 
 
 class VideoContent extends Component {
@@ -63,7 +64,7 @@ class VideoContent extends Component {
     takePhoto = () =>{
         const { sendFile } = this.props;
         const context = this.canvas.getContext('2d');
-        context.drawImage(this.videoNode, 0, 0, this.props.width, this.props.height );
+        context.drawImage(this.videoNode, 0, 0, 50, 50 );
         console.log(this.props);
         this.canvas.toBlob(()=>{return sendFile}, 'image/*');
     };
@@ -72,11 +73,17 @@ class VideoContent extends Component {
         return (
           <div>
             <video ref={node => this.videoNode = node} className="video-js vjs-default-skin" playsInline></video>
-            <div>
-              <button type="button" className="btn btn-primary" onClick={this.takePhoto}>Take Photo!1</button>
-              <div>
-                <canvas width="320" height="240" ref={ref => (this.canvas = ref)} />
-              </div>
+            <div className="CameraBottom">
+
+                <div className='toolbtn'>
+                    <canvas width="50" height="50" style={{borderRadius:'50%'}} ref={ref => (this.canvas = ref)} />
+                </div>
+
+                <div className='toolbtn' style={{width:'60px',height:'60px',boxShadow:'0px 0px 0px 3px black, 0px 0px 3px 3px white'}} onClick={this.takePhoto}></div>
+                <div className='toolbtn'>
+                    
+                </div>
+              
             </div>
           </div>
         )

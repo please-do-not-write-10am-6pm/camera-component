@@ -36,9 +36,6 @@ const theme = createMuiTheme({
             root: {
                 backgroundColor: 'transparent'
             },
-            // modalRoot: {
-            //     backgroundColor: 'red'
-            // }
         }
     }
 });
