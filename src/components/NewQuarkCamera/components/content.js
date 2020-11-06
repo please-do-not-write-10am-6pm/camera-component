@@ -11,8 +11,9 @@ import "./contentStyle.scss";
 
 class VideoContent extends Component {
     
-   
-
+    state = {
+        Mediadivces:[]
+    };
     componentDidMount() {
         // instantiate Video.js
         this.player = videojs(this.videoNode, this.props, () => {
@@ -54,6 +55,12 @@ class VideoContent extends Component {
         this.player.on('deviceError', () => {
             console.error('device error:', this.player.deviceErrorCode);
         });
+
+        navigator.mediaDevices.enumerateDevices().then((devices)=>{
+            this.setState({
+                Mediadivces:devices
+            })
+        });
     }
 
     UNSAFE_componentWillReceiveProps (nextProps){
@@ -80,7 +87,17 @@ class VideoContent extends Component {
         const context = this.canvas1.getContext('2d');
         context.drawImage(this.canvas,0,0,100,100);
     }
+    SelectCamera = (deviceId)=>{
+        this.player.record().recordImage = {deviceId: {exact: deviceId}};
+        this.player.record().stopDevice();
+        this.player.record().getDevice();
+    }
+    truncateString = (str,count)=>{
+        return (str.length > count) ? str.substr(0, count-1) + '....' : str;
+    }
+
     render() {
+        console.log(this.state.Mediadivces);
         return (
           <div>
             <video ref={node => this.videoNode = node} className="video-js vjs-default-skin"></video>
@@ -91,12 +108,17 @@ class VideoContent extends Component {
                 </div>
                 <div className='toolbtn' style={{width:'60px',height:'60px',boxShadow:'0px 0px 0px 3px black, 0px 0px 3px 3px white'}} onClick={this.takePhoto}></div>
                 <div className='toolbtn' onClick={this.showCameraList}>
-                    <ul>
-                        <li>A</li>
-                        <li>B</li>
-                        <li>C</li>
-                        <li>D</li>
-                    </ul>
+                    <div className="deviceList">
+                        {
+                        this.state.Mediadivces.map((device,index) => {
+                          return(
+                              <div key={index} className="deviceItem" onClick={()=>this.SelectCamera(device.deviceId)}>{this.truncateString(device.label,25)}</div>
+                          )  
+                        })
+                        }
+                          
+
+                    </div>
                 </div>
             </div>
             <div>
