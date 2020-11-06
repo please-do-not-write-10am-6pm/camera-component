@@ -34,10 +34,13 @@ class NewQuarkCamera extends Component {
         }
         
         render(){
-            
+            let isPhone = false;
+            console.log(screen.width)
+            if(screen.width < 700) //? is this phone
+                isPhone = true;
             return(
                 <>
-                <Draggable>
+                {!isPhone &&<Draggable>
                     <div className="Camera" style={{backgroundColor:`${this.props.componentSetting.backgroundColor}`}}> 
                         <div className="CameraTitle" style={{cursor:'move'}}>
                             <span style={{color:'white',padding:'15px',display:'flex',justifyContent:'center'}}>{this.props.componentSetting.title}</span>
@@ -50,6 +53,20 @@ class NewQuarkCamera extends Component {
                         </div>
                     </div>
                 </Draggable>
+                }
+                {
+                    isPhone && <div className="Camera" style={{backgroundColor:`${this.props.componentSetting.backgroundColor}`}}> 
+                    <div className="CameraTitle" style={{cursor:'move'}}>
+                        <span style={{color:'white',padding:'15px',display:'flex',justifyContent:'center'}}>{this.props.componentSetting.title}</span>
+                        <span style={{color:'white',right:'10px',top:'10px',position:'absolute'}} onClick={this.props.onClose}>X</span>
+                    </div>
+                    <div className="CameraContent">
+                        <VideoContent {...this.props} />
+                    </div>
+                   
+                </div>
+
+                }
                 </>
             )
         }

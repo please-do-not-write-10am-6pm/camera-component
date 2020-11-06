@@ -5,13 +5,14 @@ import 'webrtc-adapter';
 import RecordRTC from 'recordrtc';
 // import Record from 'videojs-record/dist/videojs.record.js';
 
-// import styles from './QuarkCamera.scss'
+import Modal from './popupComponent'
 import "./contentStyle.scss";
 
 
 class VideoContent extends Component {
     
     state = {
+        showPopup:false,
         Mediadivces:[]
     };
     componentDidMount() {
@@ -78,14 +79,31 @@ class VideoContent extends Component {
         console.log(this.props);
         this.canvas.toBlob(()=>{return sendFile}, 'image/*');
 
+        const popupContext = this.popupCanvas.getContext('2d');
+        console.log(this.videoNode.clientWidth)
+        console.log(this.videoNode.clientHeight)
+        console.log(this.player.videoWidth())
+        console.log(this.player.videoHeight())
+        let ratio = this.player.videoHeight() / this.player.videoWidth();
+        console.log(ratio)
+        
+        console.log(this.videoNode.clientWidth * ratio)
+
+        console.log(this.popupCanvas.width)
+        console.log(this.popupCanvas.clientHeight)
+
+        popupContext.drawImage(this.videoNode, 0,0,this.popupCanvas.width,this.popupCanvas.height);
+
         this.props.componentSetting.on('afterSnap',()=>{
             console.log('finish SnapPhoto');
             //alert("snap");
         })
     };
     popupSnapShot = () =>{
-        const context = this.canvas1.getContext('2d');
-        context.drawImage(this.canvas,0,0,100,100);
+        this.setState({
+            showPopup:true
+        })
+       //console.log("poopup") 
     }
     SelectCamera = (deviceId)=>{
         this.player.record().recordImage = {deviceId: {exact: deviceId}};
@@ -116,14 +134,14 @@ class VideoContent extends Component {
                           )  
                         })
                         }
-                          
-
                     </div>
                 </div>
             </div>
-            <div>
-                <canvas width="100" height="100" ref={ref=>(this.canvas1=ref)}/>
-            </div>
+            <Modal show={this.state.showPopup} handleClose={()=>{this.setState({showPopup:false})}}>
+                <div>
+                    <canvas width={`${this.props.width - 6}`} height="auto" ref={ref => (this.popupCanvas = ref)}/>
+                </div>
+            </Modal>            
           </div>
         )
     }
